@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flight Tracker</title>
+    
+    </style>
+</head>
+<body>
+<div id="main">
+    <h1>Flight Tracker Demo</h1>
+    <form method="GET">
+        <div>
+            <label for="city"></label>
+            <input type="text" id="city" value="{{ request.GET.city }}"  name="city"/>
+        </div>
+        <input type="submit" value="Submit"/>
+    </form>
+    {% if result %}
+        <h3>{{ result.region }}</h3>
+        <h3>{{ result.dayhour }}</h3>
+        <h3>{{ result.temp_now }}</h3>
+        {% comment %} <h3>{{ result.weather_now }}</h3> {% endcomment %}
+    {% endif %}
+</div>
+</body>
+</html>
