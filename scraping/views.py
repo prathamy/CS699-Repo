@@ -1,15 +1,15 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render
 
 
 def home(request):
 
     result = None
-
     
-    if 'city' in request.GET:
+    
+    
+    if 'year' in request.GET:
+        
         import time
         from selenium import webdriver
         from selenium.webdriver.common.keys import Keys
@@ -18,6 +18,9 @@ def home(request):
         options= Options()
         options.headless=True
 
+        # print(request.GET['from'])
+
+
         def Convert(string):
             li = list(string.split("\n"))
             return li
@@ -25,14 +28,25 @@ def home(request):
         PATH = "/usr/lib/chromium-browser/chromedriver"
         driver1 = webdriver.Chrome(PATH,options=options)
         driver2 = webdriver.Chrome(PATH,options=options)
-        driver3 = webdriver.Chrome(PATH,options=options)
+        driver3 = webdriver.Chrome(PATH,options=options)    
 
-        loc1="DEL-Delhi"
-        loc2="BOM-Mumbai"
 
-        date1="2022-12-20" 
-        date2="20122022"
-        date3="20/12/2022"
+        loc1=request.GET['from']
+        loc2=(request.GET['to'])
+
+        month= request.GET['month']
+        year=request.GET['year']
+        date=request.GET['date']
+
+        
+        # date1="2022-12-20" 
+        # date2="20122022"
+        # date3="20/12/2022"
+
+        date1=year+"-"+month+"-"+date
+        date2=date+month+year
+        date3=date+"/"+month+"/"+year
+
 
 
         site1 = "https://paytm.com/flights/flightSearch/"+loc1+"/"+loc2+"/1/0/0/E/"+date1
@@ -51,15 +65,15 @@ def home(request):
 
 
         #print(Convert(prices1.text))
-    #print(Convert(prices2.text))
-    #print(Convert(prices3.text))
+        #print(Convert(prices2.text))
+        #print(Convert(prices3.text))
 
 
         result=dict()
-        result['region'] = prices1.text
-        result['temp_now'] = prices2.text
+        result['paytm'] = prices1.text
+        result['flipkart'] = prices2.text
         # get the day, hour and actual weather
-        result['dayhour']=prices3.text
+        result['easemy']=prices3.text
         driver1.quit()
         driver2.quit()
         driver3.quit()
