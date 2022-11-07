@@ -5,9 +5,9 @@ from django.shortcuts import render
 def home(request):
 
     result = None
-    
-    
-    
+
+
+
     if 'year' in request.GET:
         
         import time
@@ -26,9 +26,9 @@ def home(request):
             return li
 
         PATH = "/usr/lib/chromium-browser/chromedriver"
-        driver1 = webdriver.Chrome(PATH,options=options)
-        driver2 = webdriver.Chrome(PATH,options=options)
-        driver3 = webdriver.Chrome(PATH,options=options)    
+        driver1 = webdriver.Chrome(PATH)
+        driver2 = webdriver.Chrome(PATH)
+        driver3 = webdriver.Chrome(PATH)    
 
 
         loc1=request.GET['from']
@@ -64,16 +64,20 @@ def home(request):
         prices3 = driver3.find_element("xpath"  , "/html/body/form/div[9]/div[5]/div/div[2]/div[2]/div/div/div[4]/div[2]/div[1]/div")
 
 
-        #print(Convert(prices1.text))
-        #print(Convert(prices2.text))
-        #print(Convert(prices3.text))
+        prices1=Convert(prices1.text)
+        prices2=Convert(prices2.text)
+        prices3=Convert(prices3.text)
 
 
         result=dict()
-        result['paytm'] = prices1.text
-        result['flipkart'] = prices2.text
-        # get the day, hour and actual weather
-        result['easemy']=prices3.text
+        result['paytm_price'] =  prices1[-2]
+        result['flipkart_price'] = prices2[-2] 
+        result['easemy_price']=prices3[-3]
+        result['paytm_airlines'] =  prices1[0]
+        result['flipkart_airlines'] = prices2[0] 
+        result['easemy_airlines']=prices3[0]
+
+
         driver1.quit()
         driver2.quit()
         driver3.quit()

@@ -112,37 +112,47 @@
     </form>
 
     {% if result %}
-        <h3 id= "san">{{ result.paytm }}</h3>
-        <h3>{{ result.flipkart }}</h3>
-        <h3>{{ result.easemy }}</h3>
+        <h3 id= "p_price">{{ result.paytm_price }}</h3>
+        <h3 id= "f_price">{{ result.flipkart_price }}</h3>
+        <h3 id= "e_price">{{ result.easemy_price }}</h3>
+        <h3 id= "p_airlines">{{ result.paytm_airlines }}</h3>
+        <h3 id= "f_airlines">{{ result.flipkart_airlines }}</h3>
+        <h3 id= "e_airlines">{{ result.flipkart_airlines }}</h3>
 
         <py-script>
           
-            from js import console
-
-            text=document.getElementById("san").innerHTML
-            print(text)
-            
-            
-            text=document.getElementById
-
             import matplotlib.pyplot as plt
-    
+            import re
+
+            p_price=document.getElementById("p_price").innerHTML
+            f_price=document.getElementById("f_price").innerHTML
+            e_price=document.getElementById("e_price").innerHTML
+            p_airlines=document.getElementById("p_airlines").innerHTML
+            f_airlines=document.getElementById("f_airlines").innerHTML
+            e_airlines=document.getElementById("e_airlines").innerHTML
+
+            #print(p_price, f_price, e_price, p_airlines , f_airlines)
+          
+            f_price=f_price[1:]
+
+            p_price=int(re.sub(",","",p_price))
+            f_price=int(re.sub(",","",f_price))
+            e_price=int(re.sub(",","",e_price))
+           
+
             fig, ax = plt.subplots()
             
-            year_1 = [2016, 2017, 2018, 2019, 2020, 2021]
-            population_1 = [42, 43, 45, 47, 48, 50]
+            price = [p_price, f_price, e_price]
+            site = ["Paytm", "Flipkart", "EasemyTrip"]
+            col=['blue' , 'yellow' , 'red']
             
-            year_2 = [2016, 2017, 2018, 2019, 2020, 2021]
-            population_2 = [43, 43, 44, 44, 45, 45]
             
-            plt.plot(year_1, population_1, marker='o', linestyle='--', color='g', label='Country 1')
-            plt.plot(year_2, population_2,  marker='d', linestyle='-', color='r', label='Country 2')
             
-            plt.xlabel('Year')
-            plt.ylabel('Population (M)')
-            plt.title('Year vs Population')
-            plt.legend(loc='lower right')
+            plt.bar(site, price , color = col )
+            
+            plt.xlabel('Site')
+            plt.ylabel('Price in INR')
+            plt.title('Price vs Site')
             
             fig
 
