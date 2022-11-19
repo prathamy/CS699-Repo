@@ -1,12 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    {% comment %} <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" /> {% endcomment %}
+
+    {% comment %} <link rel="stylesheet" href="style.css" /> {% endcomment %}
 	<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 
 
@@ -16,16 +20,75 @@
         - matplotlib
     </py-env>
 
-    </style>
+    <style>
+      
+    #body{
+      background-color: blanchedalmond;
+      background-image: url('https://previews.123rf.com/images/jchizhe/jchizhe1906/jchizhe190600005/124698136-white-plane-airplane-on-blue-pastel-color-background-with-copy-space-top-view-flat-lay-minimal-style.jpg');
+
+    }
+
+    #form {
+      text-align: center;
+  }
+
+
+
+  #sub {
+    text-align: center;
+    margin:auto;
+    font-size: 25px;
+  }
+
+  #paytm_print{
+
+   display:flex;
+
+  }
+
+  #flipkart_print{
+
+    display:flex;
+ 
+   }
+   #easemy_print{
+
+    display:flex;
+ 
+   }
+
+  #sub2 {
+    text-align: center;
+    margin:auto;
+  }
+  #fromto{
+    font-size: 25px;
+  }
+  #dateyear{
+    font-size: 25px;
+  }
+  
+     
+     </style>
+
 </head>
-<body>
+
+
+
+
+
+
+<body id= "body">
+
+
 <div id="main">
-    <h1>Flight Tracker Demo</h1>
+    <h1 style="text-align: center; font-size: 50px; " >Flight Price Comparator  </h1>
 
-    <form method="GET">
-        <div>
+    <form method="GET" id="form"  > 
 
-                <select name="from" id="from">
+        <div id="fromto"> From : 
+
+                <select name="from" id="from" style="font-size: 20px;">
                   <option value="BOM-Mumbai">MUMBAI</option>
                   <option value="DEL-Delhi">DELHI</option>
                   <option value="CCU-Kolkata">KOLKATA</option>
@@ -35,10 +98,10 @@
                   <option value="LKO-Lucknow">LUCKNOW</option>
                 </select>
 
-
-                <select name="to" id="to">
-                    <option value="BOM-Mumbai">MUMBAI</option>
+                &nbsp &nbsp &nbsp To :    
+                <select name="to" id="to" style="font-size: 20px;">
                     <option value="DEL-Delhi">DELHI</option>
+                    <option value="BOM-Mumbai">MUMBAI</option>
                     <option value="CCU-Kolkata">KOLKATA</option>
                     <option value="BLR-Bengaluru">BANGLORE</option>
                     <option value="MAA-Chennai">CHENNAI</option>
@@ -46,9 +109,13 @@
                     <option value="LKO-Lucknow">LUCKNOW</option>
                   </select>
 
+        </div>  
+        <br>
+        <br>
+        <div id="dateyear">
+                  Date :
 
-
-                  <select name="date" id="date">
+                  <select name="date" id="date" style="font-size: 20px;">
                     <option value="01">1</option>
                     <option value="02">2</option>
                     <option value="03">3</option>
@@ -82,8 +149,8 @@
                     <option value="31">31</option>
                   </select>
 
-
-                  <select name="month" id="month">
+                  &nbsp&nbsp&nbsp Month : 
+                  <select name="month" id="month" style="font-size: 20px;">
                     <option value="01">January</option>
                     <option value="02">February</option>
                     <option value="03">March</option>
@@ -98,28 +165,56 @@
                     <option value="12">December</option>
                   </select>
 
-
-                   <select name="year" id="year">
+                  &nbsp&nbsp&nbsp Year :
+                   <select name="year" id="year" style="font-size: 20px;">
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                   </select>
 
-            <input type="text" id="city" value="{{ request.GET.city }}"  name="city"/>
 
 
-        </div>
-        <input type="submit" value="Submit"/>
+            <div>
+{% comment %} 
+            <input type="text" id="city" value="{{ request.GET.city }}"  name="city"/> {% endcomment %}
+
+
+        <br><br>
+        <input type="submit" value="Submit" id="sub" />
     </form>
 
     {% if result %}
-        <h3 id= "p_price">{{ result.paytm_price }}</h3>
-        <h3 id= "f_price">{{ result.flipkart_price }}</h3>
-        <h3 id= "e_price">{{ result.easemy_price }}</h3>
-        <h3 id= "p_airlines">{{ result.paytm_airlines }}</h3>
-        <h3 id= "f_airlines">{{ result.flipkart_airlines }}</h3>
-        <h3 id= "e_airlines">{{ result.flipkart_airlines }}</h3>
+        
+        <div id="paytm_print">
+         
+        <h5>Paytm - Price : &nbsp₹</h5> 
+        <h5 id= "p_price" >{{ result.paytm_price }}</h5>
 
-        <py-script>
+        <h5>&nbsp&nbsp&nbsp Airlines : &nbsp </h5> 
+        <h5 id= "p_airlines">{{ result.paytm_airlines }}</h5>
+          
+        </div>  
+
+        <div id="flipkart_print">
+         
+          <h5>Flipkart - Price : &nbsp</h5> 
+          <h5 id= "f_price" >{{ result.flipkart_price }}</h5>
+  
+          <h5>&nbsp&nbsp&nbsp Airlines : &nbsp </h5> 
+          <h5 id= "f_airlines">{{ result.flipkart_airlines }}</h5>
+            
+          </div>
+
+          <div id="easemy_print">
+         
+            <h5>EasemyTrip - Price : &nbsp₹</h5> 
+            <h5 id= "e_price" >{{ result.easemy_price }}</h5>
+    
+            <h5>&nbsp&nbsp&nbsp Airlines : &nbsp </h5> 
+            <h5 id= "e_airlines">{{ result.easemy_airlines }}</h5>
+              
+            </div>
+
+        <py-script id="sub2">
           
             import matplotlib.pyplot as plt
             import re
@@ -140,8 +235,9 @@
             e_price=int(re.sub(",","",e_price))
            
 
-            fig, ax = plt.subplots()
-            
+            {% comment %} fig, ax = plt.subplots() {% endcomment %}
+            fig = plt.figure()
+
             price = [p_price, f_price, e_price]
             site = ["Paytm", "Flipkart", "EasemyTrip"]
             col=['blue' , 'yellow' , 'red']
@@ -149,19 +245,32 @@
             
             
             plt.bar(site, price , color = col )
-            
+            {% comment %} plt.fig(transparent=True) {% endcomment %}
             plt.xlabel('Site')
             plt.ylabel('Price in INR')
             plt.title('Price vs Site')
-            
             fig
+            
+ 
+
+            
 
         </py-script>
-        {% comment %} <h3>{{ result.weather_now }}</h3> {% endcomment %}
+        {% comment %} <h5>{{ result.weather_now }}</h5> {% endcomment %}
     {% endif %}     
 
    
 
 </div>
+
+<footer>
+
+  <br><br><br>
+<p>
+  Team Member : Sandeep Kumar (22M0790) and Prathamesh Yeole (22M0795) 
+</p>
+<br> 
+</footer>
+
 </body>
 </html>
