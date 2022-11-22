@@ -245,7 +245,11 @@
             <h5 id= "f_site" hidden> {{ result.p_url }}</h5>
             <h5 id= "e_site" hidden> {{ result.p_url }}</h5>
 
-            </div>
+            <h5 id= "loc1" hidden> {{ result.loc1 }}</h5>
+            <h5 id= "loc2" hidden> {{ result.loc2 }}</h5>
+            <h5 id= "date1" hidden> {{ result.date1 }}</h5>
+
+            </div> 
 
         <py-script id="sub2">
           
@@ -266,6 +270,11 @@
             e_url=document.getElementById("e_site").innerHTML
 
 
+            loc1=document.getElementById("loc1").innerHTML
+            loc2=document.getElementById("loc2").innerHTML
+            date1=document.getElementById("date1").innerHTML
+
+
             #print(p_price, f_price, e_price, p_airlines , f_airlines)
           
             f_price=f_price[1:]
@@ -279,20 +288,24 @@
             prices.append(f_price)
             prices.append(e_price)
 
+
+            temp="for" + loc1 +" to " + loc2 +" on " + date1
+            
+
             if p_price==e_price and e_price==f_price and f_price==p_price :
-              print("All prices are same at Paytm, Flipkart, EasemyTrip",p_price)
+              print("Prices" + temp + "are same at Paytm, Flipkart, EasemyTrip of ₹" + str(p_price))
               print("To book, visit this site:" , p_url, ".   ")
 
             elif min(prices)==p_price :
-              print("Cheapest flight available at Paytm at price of ₹" + str(p_price))
+              print("Cheapest flight price " + temp + " available at Paytm at price of ₹" + str(p_price))
               print("To book, visit this site:" , p_url, ".   ")
 
             elif min(prices)==f_price :
-              print("Cheapest flight available at Flipkart at price of ₹" + str(f_price))
+              print("Cheapest flight price " + temp + " available at Flipkart at price of ₹" + str(f_price))
               print("To book, visit this site:" , f_url, ".   ")
 
             elif min(prices)==e_price :
-              print("Cheapest flight available at EasemyTrip at price of ₹" + str(e_price))
+              print("Cheapest flight price " + temp + " available at EasemyTrip at price of ₹" + str(e_price))
               print("To book, visit this site:" , e_url,".  ")
 
 
@@ -321,7 +334,7 @@
             fig 
 
         </py-script>
-        {% comment %} <h5>{{ result.weather_now }}</h5> {% endcomment %}
+        
     {% endif %}     
 
    

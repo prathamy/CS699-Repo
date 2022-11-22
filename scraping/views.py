@@ -37,6 +37,7 @@ def home(request):
         year=request.GET['year']
         date=request.GET['date']
 
+
         view_site=request.GET['view_site']
 
         if view_site=="no":
@@ -90,8 +91,11 @@ def home(request):
         result['p_url']=site1
         result['f_url']=site2
         result['e_url']=site3
+        result['loc1']=loc1
+        result['loc2']=loc2
+        result['date1']=date1
 
-
+        
         driver1.quit()
         driver2.quit()
         driver3.quit()
