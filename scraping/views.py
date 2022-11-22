@@ -19,16 +19,15 @@ def home(request):
         options.headless=True
 
         # print(request.GET['from'])
-
+        
+        
 
         def Convert(string):
             li = list(string.split("\n"))
             return li
 
         PATH = "/usr/lib/chromium-browser/chromedriver"
-        driver1 = webdriver.Chrome(PATH)
-        driver2 = webdriver.Chrome(PATH)
-        driver3 = webdriver.Chrome(PATH)    
+       
 
 
         loc1=request.GET['from']
@@ -37,6 +36,18 @@ def home(request):
         month= request.GET['month']
         year=request.GET['year']
         date=request.GET['date']
+
+        view_site=request.GET['view_site']
+
+        if view_site=="no":
+              driver1 = webdriver.Chrome(PATH,options=options)
+              driver2 = webdriver.Chrome(PATH,options=options)
+              driver3 = webdriver.Chrome(PATH,options=options)   
+
+        if view_site=="yes":
+              driver1 = webdriver.Chrome(PATH)
+              driver2 = webdriver.Chrome(PATH)
+              driver3 = webdriver.Chrome(PATH)   
 
         
         # date1="2022-12-20" 
@@ -76,6 +87,9 @@ def home(request):
         result['paytm_airlines'] =  prices1[0]
         result['flipkart_airlines'] = prices2[0] 
         result['easemy_airlines']=prices3[0]
+        result['p_url']=site1
+        result['f_url']=site2
+        result['e_url']=site3
 
 
         driver1.quit()

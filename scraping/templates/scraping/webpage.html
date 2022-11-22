@@ -3,18 +3,22 @@
 
 
 <head>
-    <meta charset="UTF-8">
+    {% comment %} <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> {% endcomment %}
 
     {% comment %} <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" /> {% endcomment %}
 
     {% comment %} <link rel="stylesheet" href="style.css" /> {% endcomment %}
-	<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+	<script defer src="https://pyscript.net/alpha/pyscript.js" >
+    function myFunc() {
+      return "Please Wait..."
+    }
+  </script>
 
 
-    <title>Flight Tracker</title>
+    <title>Flight Price Comparator</title>
 
     <py-env>
         - matplotlib
@@ -33,7 +37,6 @@
   }
 
 
-
   #sub {
     text-align: center;
     margin:auto;
@@ -43,17 +46,26 @@
   #paytm_print{
 
    display:flex;
+   text-align: center;
+    margin:auto;
+    font-size: 25px;
 
   }
 
   #flipkart_print{
 
     display:flex;
+    text-align: center;
+    margin:auto;
+    font-size: 25px;
  
    }
    #easemy_print{
 
     display:flex;
+    text-align: center;
+    margin:auto;
+    font-size: 25px;
  
    }
 
@@ -172,15 +184,32 @@
                   </select>
 
 
+                  &nbsp&nbsp&nbsp View Site :
+                  <select name="view_site" id="view_site" style="font-size: 20px;">
+                    <option value="yes">YES</option>
+                    <option value="no">NO</option>
+                  </select>
 
-            <div>
+
+
+              </div>
+
+            
 {% comment %} 
             <input type="text" id="city" value="{{ request.GET.city }}"  name="city"/> {% endcomment %}
 
 
         <br><br>
-        <input type="submit" value="Submit" id="sub" />
+
+      
+      
+        <input type="submit" value="Submit" id="sub" style="cursor:pointer;"  onclick="getElementById('wel').innerHTML='Please Wait....' " /> 
+    
+         <h3 id="wel"></h3> 
+        
+        
     </form>
+       
 
     {% if result %}
         
@@ -211,13 +240,19 @@
     
             <h5>&nbsp&nbsp&nbsp Airlines : &nbsp </h5> 
             <h5 id= "e_airlines">{{ result.easemy_airlines }}</h5>
-              
+
+            <h5 id= "p_site" hidden> {{ result.p_url }}</h5>
+            <h5 id= "f_site" hidden> {{ result.p_url }}</h5>
+            <h5 id= "e_site" hidden> {{ result.p_url }}</h5>
+
             </div>
 
         <py-script id="sub2">
           
             import matplotlib.pyplot as plt
-            import re
+            import re 
+
+
 
             p_price=document.getElementById("p_price").innerHTML
             f_price=document.getElementById("f_price").innerHTML
@@ -225,6 +260,11 @@
             p_airlines=document.getElementById("p_airlines").innerHTML
             f_airlines=document.getElementById("f_airlines").innerHTML
             e_airlines=document.getElementById("e_airlines").innerHTML
+
+            p_url=document.getElementById("p_site").innerHTML
+            f_url=document.getElementById("f_site").innerHTML
+            e_url=document.getElementById("e_site").innerHTML
+
 
             #print(p_price, f_price, e_price, p_airlines , f_airlines)
           
@@ -234,13 +274,38 @@
             f_price=int(re.sub(",","",f_price))
             e_price=int(re.sub(",","",e_price))
            
+            prices = []
+            prices.append(p_price)
+            prices.append(f_price)
+            prices.append(e_price)
+
+            if p_price==e_price and e_price==f_price and f_price==p_price :
+              print("All prices are same at Paytm, Flipkart, EasemyTrip",p_price)
+              print("To book, visit this site:" , p_url, ".   ")
+
+            elif min(prices)==p_price :
+              print("Cheapest flight available at Paytm at price of ₹" + str(p_price))
+              print("To book, visit this site:" , p_url, ".   ")
+
+            elif min(prices)==f_price :
+              print("Cheapest flight available at Flipkart at price of ₹" + str(f_price))
+              print("To book, visit this site:" , f_url, ".   ")
+
+            elif min(prices)==e_price :
+              print("Cheapest flight available at EasemyTrip at price of ₹" + str(e_price))
+              print("To book, visit this site:" , e_url,".  ")
+
+
+
+
+
 
             {% comment %} fig, ax = plt.subplots() {% endcomment %}
             fig = plt.figure()
 
             price = [p_price, f_price, e_price]
             site = ["Paytm", "Flipkart", "EasemyTrip"]
-            col=['blue' , 'yellow' , 'red']
+            col=['green' , 'yellow' , 'pink']
             
             
             
@@ -249,11 +314,11 @@
             plt.xlabel('Site')
             plt.ylabel('Price in INR')
             plt.title('Price vs Site')
-            fig
-            
- 
+
+            plt.ylim(top=None , bottom=2000) 
 
             
+            fig 
 
         </py-script>
         {% comment %} <h5>{{ result.weather_now }}</h5> {% endcomment %}
@@ -263,7 +328,9 @@
 
 </div>
 
-<footer>
+<footer style="text-align: center;
+margin:auto;
+font-size: 25px;">
 
   <br><br><br>
 <p>
